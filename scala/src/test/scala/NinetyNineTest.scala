@@ -21,4 +21,12 @@ class NinetyNineTest extends FunSuite with Matchers {
     NinetyNine.length(List(1, 1, 2, 3, 5, 8)) should be (6)
     NinetyNine.lengthTailRecursive(List(1, 1, 2, 3, 5, 8)) should be (6)
   }
+
+  test("P05 (*) Reverse a list.") {
+    NinetyNine.reverse(List(1, 1, 2, 3, 5, 8)) should be (List(8, 5, 3, 2, 1, 1))
+  }
+
+  test("P06 (*) Find out whether a list is a palindrome.") {
+    isPalindrome(List(1, 2, 3, 2, 1)) should be (true)
+  }
 }

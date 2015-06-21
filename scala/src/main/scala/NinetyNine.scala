@@ -29,4 +29,13 @@ object NinetyNine {
     }
     lengthRecursive(0, ls)
   }
+
+  def reverse[T](ls:List[T]):List[T] = {
+    def reverseRecursive(acc:List[T], rest:List[T]):List[T] = acc match {
+      case Nil => rest
+      case h :: tail => reverseRecursive(tail, h::rest)
+    }
+    reverseRecursive(ls, Nil)
+  }
+  
 }
