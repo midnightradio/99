@@ -31,4 +31,8 @@ class NinetyNineTest extends FunSuite with Matchers {
     isPalindrome(List("x", "a", "m", "a", "x")) should be (true)
     isPalindrome(List(1, 2, 3)) should be (false)
   }
+
+  test("P07 (**) Flatten a nested list structure.") {
+    flatten(List("a", List("b", List("c", "d"), "e"))) should be (List("a", "b", "c", "d", "e"))
+  }
 }
