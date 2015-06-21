@@ -37,5 +37,9 @@ object NinetyNine {
     }
     reverseRecursive(ls, Nil)
   }
-  
+
+  def isPalindrome[T](ls:List[T]):Boolean = {
+    val m = ls.length / 2
+    if (ls.take(m) == reverse(ls).take(m)) true else false
+  }
 }

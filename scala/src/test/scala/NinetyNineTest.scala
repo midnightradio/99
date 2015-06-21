@@ -28,5 +28,7 @@ class NinetyNineTest extends FunSuite with Matchers {
 
   test("P06 (*) Find out whether a list is a palindrome.") {
     isPalindrome(List(1, 2, 3, 2, 1)) should be (true)
+    isPalindrome(List("x", "a", "m", "a", "x")) should be (true)
+    isPalindrome(List(1, 2, 3)) should be (false)
   }
 }
