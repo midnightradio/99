@@ -19,5 +19,6 @@ class NinetyNineTest extends FunSuite with Matchers {
 
   test("P04 (*) Find the number of elements of a list.") {
     NinetyNine.length(List(1, 1, 2, 3, 5, 8)) should be (6)
+    NinetyNine.lengthTailRecursive(List(1, 1, 2, 3, 5, 8)) should be (6)
   }
 }

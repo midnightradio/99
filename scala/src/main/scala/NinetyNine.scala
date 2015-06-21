@@ -21,4 +21,12 @@ object NinetyNine {
     case Nil       => 0
     case _ :: tail => 1 + length(tail)
   }
+
+  def lengthTailRecursive[T](ls:List[T]):Int = {
+    def lengthRecursive(acc:Int, currls:List[T]):Int = currls match {
+      case Nil     => acc
+      case _ :: tail => lengthRecursive(acc+1, tail)
+    }
+    lengthRecursive(0, ls)
+  }
 }
