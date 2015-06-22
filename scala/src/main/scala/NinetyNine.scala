@@ -42,4 +42,121 @@ object NinetyNine {
     val m = ls.length / 2
     if (ls.take(m) == reverse(ls).take(m)) true else false
   }
+
+  /* P07 */
+  def flatten(ls:List[Any]):List[Any] = {
+    def flattenRecursive(tail:List[Any], acc:List[Any]):List[Any] = tail match {
+        case Nil => acc
+        /*
+        case y :: Nil => y match {
+            case x :: xs => flattenRecursive(xs, x :: acc)
+            case x => flattenRecursive(Nil, x :: acc)
+        }
+        */
+        case y :: ys => y match {
+            case x :: Nil => {
+                println(x+"::Nil")
+                flattenRecursive(ys, x :: acc)
+            }
+            case x :: xs => {
+                println(x+"::xs")
+                flattenRecursive(xs, x :: acc) /* nested List */
+            }
+            case x => {
+                println(x)
+                flattenRecursive(ys, x :: acc)
+            }
+        }
+    }
+    flattenRecursive(ls, Nil).reverse
+  }
+
+  /* PO8 */
+  def compress[T](ls:List[T]):List[T] = ls match {
+    case Nil => Nil
+    case x :: xs => x :: compress(xs.dropWhile(_ == x))
+  }
+
+  def compressTailRecursive[T](ls:List[T]):List[T] = {
+    def compressRecursive(rest:List[T], result:List[T]):List[T] = rest match {
+        case Nil => reverse(result)
+        case x :: xs => compressRecursive(xs.dropWhile(_ == x), x :: result)
+    }
+    compressRecursive(ls, Nil)
+  }
+
+  /* P09 */
+  def pack[T](ls:List[T]):List[List[T]] = ls match {
+    case Nil => Nil
+    case x :: xs => ls.takeWhile(_ == x) :: pack(ls.dropWhile(_ == x))
+  }
+
+  def packTailRecursive[T](ls:List[T]):List[List[T]] = {
+    def packRecursive(rest:List[T], result:List[List[T]]):List[List[T]] = rest match {
+        case Nil => reverse(result)
+        case x :: xs => packRecursive(rest.dropWhile(_ == x), rest.takeWhile(_ == x) :: result)
+    }
+    packRecursive(ls, Nil)
+  }
+
+  /* P10 */
+  def encode[T](ls:List[T]):List[(Int,T)] = {
+    packTailRecursive(ls).map(l => Tuple2(l.size, l(0)))
+  }
+
+  /* P11 */
+  def encodeModified[T](ls:List[T]):List[Any] = {
+    encode(ls).map (t => if (t._1 == 1) t._2 else t)
+  }
+
+  /* P12 */
+  def decode[T](ls:List[(Int, T)]):List[T] = {
+    def repeat(ntimes:Int, elm:T):List[T] = {
+        if (ntimes == 0) Nil else elm :: repeat(ntimes-1, elm)
+    }
+    ls.map(t => repeat(t._1, t._2)).flatten
+  }
+
+  /* P13 */
+  def encodeDirect(ls:List[Any]):List[Any] = {
+    def encodeDirectCount(acc:Int, ls:List[List[Any]], result:List[(Int, Any)]):List[(Int, Any)] = ls match {
+      case Nil => reverse(result)
+      case x :: Nil => encodeDirectCount(0, Nil, (acc+1, x(0)) :: result)
+      case x :: xs => {
+        if (x(0) == x(1) && xs != Nil) encodeDirectCount(acc+1, xs, result)
+        else encodeDirectCount(1, xs, (acc, x(0)) :: result)
+      }
+    }
+    encodeDirectCount(1, ls.sliding(2).toList, Nil)
+  }
+
+  /* P14 */
+  def duplicate(ls:List[Any]):List[Any] = {
+    ls.map(x => List(x, x)).flatten
+  }
+
+  /* P15 */
+  def duplicateN(n:Int, ls:List[Any]):List[Any] = {
+    def repeat(ntimes:Int, elm:Any):List[Any] = {
+        if (ntimes == 0) Nil else elm :: repeat(ntimes-1, elm)
+    }
+    ls.map(x => repeat(n, x)).flatten
+  }
+
+  /* P16 */
+  def drop(n:Int, ls:List[Any]):List[Any] = {
+    def dropRecursive(acc:Int, tail:List[Any], result:List[Any]):List[Any] = tail match {
+      case Nil => result.reverse
+      case x :: xs => {
+        if (acc == 1) dropRecursive(n, xs, result)
+        else dropRecursive(acc-1, xs, x :: result)
+      }
+    }
+    dropRecursive(n, ls, Nil)
+  }
+
+  /* P17 */
+  def split(n:Int, ls:List[Any]):Tuple2[List[Any], List[Any]] = {
+    Tuple2(ls.take(n), ls.drop(3))
+  }
 }
