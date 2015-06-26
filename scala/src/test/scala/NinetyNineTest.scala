@@ -77,4 +77,27 @@ class NinetyNineTest extends FunSuite with Matchers {
   test("P17 (*) Split a list into two parts.") {
     split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be ((List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k)))
   }
+
+  test("P18 (**) Extract a slice from a list.") {
+    slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g))
+  }
+
+  test("P19 (**) Rotate a list N places to the left.") {
+    rotateTailRecursive(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+
+    rotateTailRecursive(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) should be (List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+  }
+
+  test("P20 (*) Remove the Kth element from a list.") {
+    removeAtTailRecursive(1, List('a, 'b, 'c, 'd)) should be ((List('a, 'c, 'd),'b))
+  }
+
+  test("P21 (*) Insert an element at a given position into a list.") {
+    insertAtTailRecursive('new, 1, List('a, 'b, 'c, 'd)) should be ((List('a, 'new, 'b, 'c, 'd)))
+  }
+
+  test("P22 (*) Create a list containing all integers within a given range.") {
+    rangeTailRecursive(4, 9) should be (List(4, 5, 6, 7, 8, 9))
+  }
+
 }

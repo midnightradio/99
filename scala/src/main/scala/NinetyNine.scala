@@ -159,4 +159,51 @@ object NinetyNine {
   def split(n:Int, ls:List[Any]):Tuple2[List[Any], List[Any]] = {
     Tuple2(ls.take(n), ls.drop(3))
   }
+
+  /* P18 */
+  def slice(s:Int, e:Int, ls:List[Any]):List[Any] = {
+    Range(s,e).map(i => ls(i)).toList
+  }
+
+  /* P19 */
+  def rotateTailRecursive(n:Int, ls:List[Any]):List[Any] = {
+    val i = if (n>=0) n else ls.size + n
+    def rotateRecursive(acc:Int, pos:Int, result:List[Any], tail:List[Any]):List[Any] = tail match {
+        case x :: xs => {
+            if (acc == pos) x:: xs ::: reverse(result)
+            else rotateRecursive(acc+1, pos, x :: result, xs)
+        }
+    }
+    rotateRecursive(0, i, Nil, ls)
+  }
+
+  /* P20 */
+  def removeAtTailRecursive(n:Int, ls:List[Any]):Tuple2[List[Any],Any] = {
+    def removeAtRecursive(acc:Int, n:Int, ls:List[Any], result:List[Any]):List[Any] = (acc equals n, ls) match {
+        case (true, x::xs) => removeAtRecursive(acc+1, n, xs, result)
+        case (false, x::xs) => removeAtRecursive(acc+1, n, xs, x::result)
+        case (_, Nil) => reverse(result)
+    }
+    Tuple2(removeAtRecursive(0, n, ls, Nil), ls(n))
+  }
+
+  /* P21 */
+  def insertAtTailRecursive(item:Any, pos:Int, ls:List[Any]):List[Any] = {
+    def insertAtRecursive(acc:Int, pos:Int, ls:List[Any], result:List[Any]):List[Any] = (acc equals pos, ls) match {
+        case (true, x::xs) => insertAtRecursive(acc+1, pos, xs, x::item::result)
+        case (false, x::xs) => insertAtRecursive(acc+1, pos, xs, x::result)
+        case (_, Nil) => reverse(result)
+    }
+    insertAtRecursive(0, pos, ls, Nil)
+  }
+
+  /* P22 */ 
+  def rangeTailRecursive(s:Int, e:Int):List[Int] = {
+    def rangeRecursive(acc:Int, s:Int, e:Int, result:List[Int]):List[Int] =  {
+        if (acc < s) rangeRecursive(acc+1, s, e, result)
+        else if (acc == e) reverse(acc :: result)
+        else rangeRecursive(acc+1, s, e, acc :: result)
+    }
+    rangeRecursive(s, s, e, Nil)
+  }
 }
